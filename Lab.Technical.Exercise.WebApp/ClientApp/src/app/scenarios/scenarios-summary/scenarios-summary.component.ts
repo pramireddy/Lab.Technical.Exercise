@@ -3,7 +3,6 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { IScenario } from '../../core/models/Scenario';
-import { ReactiveFormsModule } from '@angular/forms';
 import { LoggerService, ScenariosService } from '../../core/services';
 
 @Component({

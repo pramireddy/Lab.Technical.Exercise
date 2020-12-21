@@ -15,6 +15,10 @@ import { ScenariosSummaryComponent } from './scenarios/scenarios-summary/scenari
 import { ScenarioDetailsComponent } from './scenarios/scenario-details/scenario-details.component';
 import { MaterialModule } from './material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AlbumDetailComponent } from './album-detail/album-detail.component';
+import { LayoutComponent } from './layout/layout.component';
+import { AlbumCreateComponent } from './album-create/album-create.component';
+import { AlbumUpdateComponent } from './album-update/album-update.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +29,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ScenarioDetailsComponent,
     ScenariosSearchComponent,
     ScenariosSearchByUseridComponent,
-    ScenariosSearchByDateRangeComponent
+    ScenariosSearchByDateRangeComponent,
+    AlbumDetailComponent,
+    LayoutComponent,
+    AlbumCreateComponent,
+    AlbumUpdateComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -35,8 +43,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ReactiveFormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'search-scenarios', component: ScenariosSearchComponent },
-      { path: 'scenarios-summary', component: ScenariosSummaryComponent },
+      // { path: 'search-scenarios', component: ScenariosSearchComponent },
+      { path: 'search-scenarios', component: ScenariosSummaryComponent },
+      { path: 'update', component: AlbumUpdateComponent },
+      { path: 'create', component: AlbumCreateComponent },
+      { path: 'scenarios-summary', component: AlbumDetailComponent },
     ]),
     BrowserAnimationsModule,
     MaterialModule
