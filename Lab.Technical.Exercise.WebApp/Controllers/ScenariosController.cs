@@ -80,5 +80,20 @@ namespace Lab.Technical.Exercise.WebApp.Controllers
             var scenarios = _mapper.Map<IEnumerable<ScenarioDto>>(scenarioEntities);
             return Ok(scenarios);
         }
+        
+        [HttpPost]
+        public ActionResult CreateAlbum(AlbumRequest album)
+        {
+            return NoContent();
+        }
+    }
+
+    public class AlbumRequest
+    {
+        public string Name { get; set; }
+        public int Artist { get; set; }
+        public int Label { get; set; }
+        public int Type { get; set; }
+        public int Stock { get; set; }
     }
 }

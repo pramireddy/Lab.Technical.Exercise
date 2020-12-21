@@ -1,12 +1,17 @@
 // import { RepositoryService } from './../../shared/repository.service';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators,FormBuilder } from '@angular/forms';
+import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Location } from '@angular/common';
-import { MatSelectModule  } from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
 
 import { MatDialog } from '@angular/material/dialog';
+
 // import { SuccessDialogComponent } from 'src/app/shared/dialogs/success-dialog/success-dialog.component';
 // import { ErrorHandlerService } from '../../shared/error-handler.service';
+import { SucessDialogComponent } from '../core/dialogs/sucess-dialog/sucess-dialog.component'
+import { ErrorDialogComponent } from '../core/dialogs/error-dialog/error-dialog.component'
+import { ScenariosService } from '../core/services';
+import { IAlbum } from '../core/models/Album';
 
 interface IArtist {
   id: number;
@@ -18,9 +23,9 @@ interface IAlbumType {
   name: string;
 }
 
-interface IAlbumLabel{
+interface IAlbumLabel {
   id: number,
-  name : string
+  name: string
 }
 
 @Component({
@@ -33,9 +38,9 @@ export class AlbumCreateComponent implements OnInit {
   public ownerForm: FormGroup = new FormGroup({});
   private dialogConfig;
   selectedCar: string;
-  selectedValue : string;
+  selectedValue: string;
 
-  constructor(private location: Location, private fb: FormBuilder) { }
+  constructor(private location: Location, private fb: FormBuilder, private dialog: MatDialog,private scenarioService: ScenariosService) { }
 
   ngOnInit(): void {
     this.ownerForm = this.fb.group({
@@ -50,39 +55,69 @@ export class AlbumCreateComponent implements OnInit {
       height: '200px',
       width: '400px',
       disableClose: true,
-      data: { }
+      data: {}
     }
   }
 
-  public hasError = (controlName: string, errorName: string) =>{
+  public hasError = (controlName: string, errorName: string) => {
     return this.ownerForm.controls[controlName].hasError(errorName);
   }
- 
+
   public onCancel = () => {
     this.location.back();
   }
-  public createOwner = (ownerFormValue) => {
+  public createOwner = (ownerFormValue: IAlbum) => {
     if (this.ownerForm.valid) {
+
+      this.creatNewAlbum(ownerFormValue);
       console.log(ownerFormValue);
+      // let dialogRef = this.dialog.open(SucessDialogComponent, this.dialogConfig);
+
+      // dialogRef.afterClosed()
+      //   .subscribe(result => {
+      //     this.location.back();
+      //   });
     }
   }
+
+  private creatNewAlbum(request:IAlbum) {
+    this.scenarioService.creatAlbum(request)
+      .subscribe(
+        {
+          next: (result: any) => {
+
+            console.log(result);
+ 
+          },
+          error: (error: any) => {
+            // this.logger.error("Failed to Fetch Scenarios" + error);
+            console.log(error);
+            
+          },
+          complete: () => {
+            // this.logger.trace("Fetch Scenarios succcess");
+          }
+        }
+      );
+  }
+
   types: IAlbumType[] = [
-    {id: 111, name: 'Vinyl'},
-    {id: 222, name: 'CD'}
+    { id: 111, name: 'Vinyl' },
+    { id: 222, name: 'CD' }
 
   ];
 
   artits: IArtist[] = [
-    {id: 111, name: 'Artist111'},
-    {id: 222, name: 'Artist222'},
-    {id: 333, name: 'Artist333'},
+    { id: 111, name: 'Artist111' },
+    { id: 222, name: 'Artist222' },
+    { id: 333, name: 'Artist333' },
   ];
 
-  labels : IAlbumLabel[] =[
-    {id:111,name :'Lable111'},
-    {id:222,name :'Lable222'},
-    {id:222,name :'Lable222'},
-    {id:222,name :'Lable222'},
+  labels: IAlbumLabel[] = [
+    { id: 111, name: 'Lable111' },
+    { id: 222, name: 'Lable222' },
+    { id: 222, name: 'Lable222' },
+    { id: 222, name: 'Lable222' },
   ]
 
 }
